@@ -15,6 +15,7 @@ export function Login({ onLogin }: LoginProps) {
   const [restaurantName, setRestaurantName] = useState("");
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // removed testOtp state; OTP only handled through verification step
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,9 +66,14 @@ export function Login({ onLogin }: LoginProps) {
         });
         const data = await res.json();
         if (res.ok) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('userInfo', JSON.stringify(data));
-          onLogin(email, password, loginMode);
+          if (data.otpRequired) {
+            // OTP sent, proceed to verification
+            onLogin(email, password, loginMode);
+          } else {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            onLogin(email, password, loginMode);
+          }
         } else {
           alert(`Login failed: ${data.message}`);
         }
@@ -309,6 +315,7 @@ export function Login({ onLogin }: LoginProps) {
               <p className="text-gray-600 text-sm">
                 Remember your password?{" "}
                 <button
+                  type="button"
                   onClick={() => setIsForgotPassword(false)}
                   className={`text-${accentColor}-${isRestaurantMode ? '600' : '500'} hover:text-${accentColor}-${isRestaurantMode ? '700' : '600'} font-semibold`}
                 >
@@ -325,6 +332,7 @@ export function Login({ onLogin }: LoginProps) {
                     ? "New to Campus Canteen?"
                     : "Don't have an account?"}{" "}
                 <button
+                  type="button"
                   onClick={() => setIsSignUp(!isSignUp)}
                   className={`text-${accentColor}-${isRestaurantMode ? '600' : '500'} hover:text-${accentColor}-${isRestaurantMode ? '700' : '600'} font-semibold`}
                 >

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FoodItem } from "./components/FoodCard";
 import { Login } from "./components/Login";
-import { VerificationCode } from "./components/VerificationCode";
+import { VerifyEmail } from "./components/VerifyEmail";
 import { Toaster } from "./components/ui/sonner";
 import { CustomerView } from "./views/CustomerView";
 import { RestaurantView } from "./views/RestaurantView";
@@ -199,19 +199,6 @@ export default function App() {
     setAuthStep("verification");
   };
 
-  const handleVerify = (code: string) => {
-    // In a real app, verify the code with backend
-    if (code === "123456" || code.length === 6) {
-      setAuthStep("authenticated");
-      // Set initial view mode based on user role
-      if (userRole === "restaurant") {
-        setViewMode("restaurant");
-      } else {
-        setViewMode("customer");
-      }
-    }
-  };
-
   const handleLogout = () => {
     setAuthStep("login");
     setUserRole(null);
@@ -297,10 +284,19 @@ export default function App() {
   // Show verification screen
   if (authStep === "verification") {
     return (
-      <VerificationCode
+      <VerifyEmail
         email={userEmail}
-        onVerify={handleVerify}
-        onBack={() => setAuthStep("login")}
+        onBack={() => {
+          setAuthStep("login");
+        }}
+        onVerified={() => {
+          setAuthStep("authenticated");
+          if (userRole === "restaurant") {
+            setViewMode("restaurant");
+          } else {
+            setViewMode("customer");
+          }
+        }}
         userRole={userRole}
       />
     );
