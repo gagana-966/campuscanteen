@@ -181,7 +181,7 @@ export default function App() {
 
   const fetchFoodItems = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/food');
+      const res = await fetch('/api/food');
       const data = await res.json();
       if (res.ok) {
         const mappedData = data.map((item: any) => ({ ...item, id: item._id }));
@@ -209,7 +209,7 @@ export default function App() {
   const handleAddItem = async (item: Omit<FoodItem, "id">) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/food', {
+      const res = await fetch('/api/food', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -235,7 +235,7 @@ export default function App() {
   const handleUpdateItem = async (id: string, updates: Partial<FoodItem>) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/food/${id}`, {
+      const res = await fetch(`/api/food/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -259,7 +259,7 @@ export default function App() {
   const handleDeleteItem = async (id: string) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/food/${id}`, {
+      const res = await fetch(`/api/food/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`

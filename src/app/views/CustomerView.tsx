@@ -104,7 +104,7 @@ export function CustomerView({ foodItems, userEmail, onLogout }: CustomerViewPro
         totalAmount
       };
 
-      const res = await fetch('http://localhost:5000/api/orders', {
+      const res = await fetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -194,8 +194,8 @@ export function CustomerView({ foodItems, userEmail, onLogout }: CustomerViewPro
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${selectedCategory === category
-                  ? "bg-orange-500 text-white"
-                  : "bg-white text-gray-700 hover:bg-gray-100"
+                ? "bg-orange-500 text-white"
+                : "bg-white text-gray-700 hover:bg-gray-100"
                 }`}
             >
               {category}

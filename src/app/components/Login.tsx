@@ -24,7 +24,7 @@ export function Login({ onLogin }: LoginProps) {
     try {
       if (isForgotPassword) {
         // Handle forgot password
-        const res = await fetch('http://localhost:5000/api/auth/forgotpassword', {
+        const res = await fetch('/api/auth/forgotpassword', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email }),
@@ -38,7 +38,7 @@ export function Login({ onLogin }: LoginProps) {
         }
       } else if (isSignUp) {
         // Handle registration
-        const res = await fetch('http://localhost:5000/api/auth/register', {
+        const res = await fetch('/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -59,7 +59,7 @@ export function Login({ onLogin }: LoginProps) {
         }
       } else {
         // Handle login
-        const res = await fetch('http://localhost:5000/api/auth/login', {
+        const res = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password, role: loginMode }),

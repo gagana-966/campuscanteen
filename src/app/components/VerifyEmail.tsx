@@ -43,7 +43,7 @@ export function VerifyEmail({ email, onBack, onVerified, userRole }: VerifyEmail
     setError("");
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/verify-login-otp', {
+      const res = await fetch('/api/auth/verify-login-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, role: userRole, otp }),
